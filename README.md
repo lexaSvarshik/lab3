@@ -29,7 +29,29 @@
 ### Создайте 10 сцен на Unity с изменяющимся уровнем сложности.
 - Для изменения уровня сложности я изменял переменные, перечисленные выше.
 - Для изменения переменных я создал LevelController, в котором хранится номер загруженного уровня. Это необходимо для корректного переноса данных из гугл таблицы в игру.
-- Для того, чтобы юзер смог выбрать любой уровень, я создал новое меню LevelMenu
+```cs
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public static class LevelController
+{
+    public static readonly int LevelCount = 10;
+    private static int levelNumber;
+
+    public static int GetLevelNumber()
+    {
+        return levelNumber;
+    }
+
+    public static void ChangeLevelNum(int levelNum)
+    {
+        LevelController.levelNumber = levelNum;
+    }
+}
+```
+- Для того, чтобы юзер смог выбрать любой уровень, я создал новое меню LevelMenu (скрыто по дефолту)
+![изображение](https://github.com/lexaSvarshik/lab3/assets/96281939/3b68e8be-302d-46c5-9216-d7bafb807a43)
 
 ## Задание 3
 ### Решение в 80+ баллов должно заполнять google-таблицу данными из Python. В Python данные также должны быть визуализированы.
@@ -37,14 +59,13 @@
 - Вот код, который генерирует необходимые значения и записывает их в таблицу. Данные визуализированы с помощью pyplot.
 
 ```py
-
 import math
 import gspread
 import numpy as np
 from matplotlib import pyplot as plt 
 
-gc = gspread.service_account(filename='da-in-gamedev-lab-3-4c13cc339b76.json')
-sh = gc.open("DA-in-GameDev-lab-3")
+gc = gspread.service_account(filename='lab3-408211-43fc1f2a669b.json')
+sh = gc.open("lab3")
 
 level_count = 10
 levels = [i for i in range(1, level_count+1)]
@@ -52,17 +73,17 @@ levels = [i for i in range(1, level_count+1)]
 shields_num_array = [3, 3, 3, 3, 2, 2, 2, 1, 1, 1]
 shields_num_table_start_index = "A3"
 
-dragon_speed_start = 5
-dragon_speed_modifier = 3
-dragon_speed_table_start_index = "K3"
+drakon_speed_start = 5
+drakon_speed_modifier = 3
+drakon_speed_table_start_index = "K3"
 
-dragon_time_between_egg_drop_start = 1
-dragon_time_between_egg_drop_modifier = -0.075
-dragon_time_between_egg_drop_table_start_index = "A17"
+drakon_time_between_egg_drop_start = 1
+drakon_time_between_egg_drop_modifier = -0.075
+drakon_time_between_egg_drop_table_start_index = "A17"
 
-dragon_left_right_distance_start = 10
-dragon_left_right_distance_modifier = -0.25
-dragon_left_right_distance_table_start_index = "K17"
+drakon_left_right_distance_start = 10
+drakon_left_right_distance_modifier = -0.25
+drakon_left_right_distance_table_start_index = "K17"
 
 def create_array(length, startNum, modifier):
     array = []
@@ -83,33 +104,32 @@ plt.xlabel('Level')
 plt.ylabel('Shields')
 plt.show()     
     
-dragon_speed_array = create_array(level_count, dragon_speed_start, dragon_speed_modifier)
-load_data(dragon_speed_array, dragon_speed_table_start_index)
-plt.plot(levels, dragon_speed_array)  
-plt.title("Dragon Speed")
+drakon_speed_array = create_array(level_count, drakon_speed_start, drakon_speed_modifier)
+load_data(drakon_speed_array, drakon_speed_table_start_index)
+plt.plot(levels, drakon_speed_array)  
+plt.title("drakon Speed")
 plt.xticks(ticks=levels, labels=levels) 
 plt.xlabel('Level')
 plt.ylabel('Speed')
 plt.show()
 
-dragon_time_between_egg_drop_array = create_array(level_count, dragon_time_between_egg_drop_start, dragon_time_between_egg_drop_modifier)
-load_data(dragon_time_between_egg_drop_array, dragon_time_between_egg_drop_table_start_index)
-plt.plot(levels, dragon_time_between_egg_drop_array)  
+drakon_time_between_egg_drop_array = create_array(level_count, drakon_time_between_egg_drop_start, drakon_time_between_egg_drop_modifier)
+load_data(drakon_time_between_egg_drop_array, drakon_time_between_egg_drop_table_start_index)
+plt.plot(levels, drakon_time_between_egg_drop_array)  
 plt.title("Time between egg drop")
 plt.xticks(ticks=levels, labels=levels) 
 plt.xlabel('Level')
 plt.ylabel('Time')
 plt.show()
 
-dragon_left_right_distance_array = create_array(level_count, dragon_left_right_distance_start, dragon_left_right_distance_modifier)
-load_data(dragon_left_right_distance_array, dragon_left_right_distance_table_start_index)
-plt.plot(levels, dragon_left_right_distance_array)  
-plt.title("Dragon Left Right distance")
+drakon_left_right_distance_array = create_array(level_count, drakon_left_right_distance_start, drakon_left_right_distance_modifier)
+load_data(drakon_left_right_distance_array, drakon_left_right_distance_table_start_index)
+plt.plot(levels, drakon_left_right_distance_array)  
+plt.title("drakon Left Right distance")
 plt.xticks(ticks=levels, labels=levels) 
 plt.xlabel('Level')
 plt.ylabel('Distance')
 plt.show()
-
 ```
 
 ## Выводы
